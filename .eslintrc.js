@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    'jest/globals': true,
   },
   extends: [
     'plugin:react/recommended',
@@ -15,8 +16,10 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'prettier', 'jest'],
   rules: {
     'prettier/prettier': 'error',
+    'jest/consistent-test-it': ['error', { fn: 'test' }], // test()を使うことを強制
+    'jest/require-top-level-describe': ['error'], // トップレベルでdescribe()を使うことを強制
   },
 };

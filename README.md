@@ -92,4 +92,5 @@ yarn eslint --init
 # ✔ Which package manager do you want to use? · yarn
 yarn add --dev prettier
 yarn add -D eslint-plugin-prettier
+yarn add --dev eslint-config-prettier
 ```

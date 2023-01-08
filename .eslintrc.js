@@ -8,6 +8,7 @@ module.exports = {
     'standard',
     'eslint:recommended',
     'plugin:prettier/recommended',
+    'prettier',
   ],
   overrides: [],
   parserOptions: {

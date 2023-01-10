@@ -25,6 +25,9 @@
 
 .main {
   text-align: center;
+  margin: auto;
+  max-width: 600px;
+  min-width: 300px;
 }
 
 .thread_list {
@@ -35,4 +38,7 @@
   list-style: none;
   padding: 10px;
   font-size: 20px;
+  border: 1px solid #565656;
+  border-radius: 5px;
+  background: #ffffff;
 }

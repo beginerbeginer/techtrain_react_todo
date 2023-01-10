@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import { Header } from './Header';
+import { Threads } from './Threads';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const baseURL = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
 
-export default App;
+export const App = () => {
+  const [threads, setThreads] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get(`${baseURL}/threads?offset=1`).then((res) => {
+      setThreads(res.data);
+    });
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <main className="main">
+        <h1>新着スレッド</h1>
+        <ul className="thread_list">
+          <Threads threads={threads} />
+        </ul>
+      </main>
+    </>
+  );
+};

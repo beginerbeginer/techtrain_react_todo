@@ -22,3 +22,17 @@
   font-style: Regular;
   color: #fff;
 }
+
+.main {
+  text-align: center;
+}
+
+.thread_list {
+  padding-left: 0;
+}
+
+.thread_title {
+  list-style: none;
+  padding: 10px;
+  font-size: 20px;
+}

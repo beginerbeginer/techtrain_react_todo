@@ -2,6 +2,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { App } from './App';
 import { NewThreadForm } from './NewThreadForm';
 
@@ -35,7 +36,11 @@ describe('Threads index', () => {
 
 describe('Thread new', () => {
   test('verify 「create new thread」 exist', () => {
-    render(<NewThreadForm />);
+    render(
+      <BrowserRouter>
+        <NewThreadForm />
+      </BrowserRouter>,
+    );
     const title = screen.getByText('スレッド新規作成');
     expect(title).toBeInTheDocument();
   });

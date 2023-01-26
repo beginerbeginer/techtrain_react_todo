@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
 
 export const NewThreadForm = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [error, setError] = useState(null);
 
@@ -27,6 +29,7 @@ export const NewThreadForm = () => {
       });
       if (response.status === 200) {
         setTitle('');
+        navigate(`/`);
       }
     } catch (err) {
       let errorMessage = '';
@@ -51,7 +54,9 @@ export const NewThreadForm = () => {
         />
         {error && <p className="error">{error}</p>}
         <div>
-          <a href="/">Topに戻る</a>
+          <a href="" onClick={() => navigate('/')}>
+            Topに戻る
+          </a>
           <button type="submit" className="button" disabled={error}>
             作成
           </button>

@@ -9,12 +9,13 @@ export const NewThreadForm = () => {
   const [error, setError] = useState(null);
 
   const onChangeTitle = (e) => {
-    if (e.target.value.length > 30) {
+    const titleName = e.target.value;
+    if (titleName.length > 30) {
       setError('タイトルの文字数は30文字以下にしてください');
     } else {
       setError(null);
     }
-    setTitle(e.target.value);
+    setTitle(titleName);
   };
 
   const onSubmit = async (e) => {

@@ -65,3 +65,13 @@
   border-radius: 10px;
   border: 1px solid #565656;
 }
+
+button:disabled {
+  background-color: gray;
+  color: black;
+}
+
+.error {
+  color: red;
+  font-size: small;
+}

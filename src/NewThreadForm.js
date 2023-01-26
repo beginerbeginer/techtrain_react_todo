@@ -1,18 +1,45 @@
-// 下記のformで作成ボタンを押下した後に入力した値が消えるようにしてください。他にも気になる点があれば修正してください。
-
 import React, { useState } from 'react';
 import axios from 'axios';
 const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
 
 export const NewThreadForm = () => {
   const [title, setTitle] = useState('');
+  const [error, setError] = useState(null);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+
+  const onChangeTitle = (e) => {
+    if (e.target.value.length > 30) {
+      setError('タイトルの文字数は30文字以下にしてください');
+      setIsSubmitDisabled(true);
+    } else {
+      setError(null);
+      setIsSubmitDisabled(false);
+    }
+    setTitle(e.target.value);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    axios.post(`${baseUrl}/threads`, {
-      title,
-    });
-    setTitle('');
+    const blankRegEx = /^\s+$/;
+    if (!title) {
+      setError('スレッドタイトルを入力してください');
+      return;
+    } else if (blankRegEx.test(title)) {
+      setError('スレッドタイトルに空白のみの文字列は指定できません');
+      return;
+    }
+    if (isSubmitDisabled) {
+      return;
+    }
+    try {
+      const titleTrim = title.trim();
+      await axios.post(`${baseUrl}/threads`, {
+        title: titleTrim,
+      });
+      setTitle('');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -21,12 +48,13 @@ export const NewThreadForm = () => {
       <form onSubmit={onSubmit} className="form">
         <input
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={onChangeTitle}
           placeholder="スレッドタイトル"
         />
+        {error && <p className="error">{error}</p>}
         <div>
           <a href="/">Topに戻る</a>
-          <button type="submit" className="button">
+          <button type="submit" className="button" disabled={isSubmitDisabled}>
             作成
           </button>
         </div>

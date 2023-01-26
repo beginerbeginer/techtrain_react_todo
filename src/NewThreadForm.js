@@ -1,3 +1,5 @@
+// 下記のformで作成ボタンを押下した後に入力した値が消えるようにしてください。他にも気になる点があれば修正してください。
+
 import React, { useState } from 'react';
 import axios from 'axios';
 const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
@@ -10,6 +12,7 @@ export const NewThreadForm = () => {
     axios.post(`${baseUrl}/threads`, {
       title,
     });
+    setTitle('');
   };
 
   return (
@@ -17,6 +20,7 @@ export const NewThreadForm = () => {
       <h1>スレッド新規作成</h1>
       <form onSubmit={onSubmit} className="form">
         <input
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="スレッドタイトル"
         />

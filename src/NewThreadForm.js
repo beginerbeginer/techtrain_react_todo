@@ -5,15 +5,12 @@ const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
 export const NewThreadForm = () => {
   const [title, setTitle] = useState('');
   const [error, setError] = useState(null);
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
   const onChangeTitle = (e) => {
     if (e.target.value.length > 30) {
       setError('タイトルの文字数は30文字以下にしてください');
-      setIsSubmitDisabled(true);
     } else {
       setError(null);
-      setIsSubmitDisabled(false);
     }
     setTitle(e.target.value);
   };
@@ -26,9 +23,6 @@ export const NewThreadForm = () => {
       return;
     } else if (blankRegEx.test(title)) {
       setError('スレッドタイトルに空白のみの文字列は指定できません');
-      return;
-    }
-    if (isSubmitDisabled) {
       return;
     }
     try {
@@ -54,7 +48,7 @@ export const NewThreadForm = () => {
         {error && <p className="error">{error}</p>}
         <div>
           <a href="/">Topに戻る</a>
-          <button type="submit" className="button" disabled={isSubmitDisabled}>
+          <button type="submit" className="button" disabled={error !== null}>
             作成
           </button>
         </div>

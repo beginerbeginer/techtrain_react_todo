@@ -17,18 +17,13 @@ export const NewThreadForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const blankRegEx = /^\s+$/;
-    if (!title) {
+    if (!title.trim()) {
       setError('スレッドタイトルを入力してください');
-      return;
-    } else if (blankRegEx.test(title)) {
-      setError('スレッドタイトルに空白のみの文字列は指定できません');
       return;
     }
     try {
-      const titleTrim = title.trim();
       await axios.post(`${baseUrl}/threads`, {
-        title: titleTrim,
+        title: title.trim(),
       });
       setTitle('');
     } catch (err) {
@@ -48,7 +43,7 @@ export const NewThreadForm = () => {
         {error && <p className="error">{error}</p>}
         <div>
           <a href="/">Topに戻る</a>
-          <button type="submit" className="button" disabled={error !== null}>
+          <button type="submit" className="button" disabled={error}>
             作成
           </button>
         </div>

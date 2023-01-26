@@ -22,12 +22,21 @@ export const NewThreadForm = () => {
       return;
     }
     try {
-      await axios.post(`${baseUrl}/threads`, {
+      const response = await axios.post(`${baseUrl}/threads`, {
         title: title.trim(),
       });
-      setTitle('');
+      if (response.status === 200) {
+        setTitle('');
+      }
     } catch (err) {
-      console.error(err);
+      let errorMessage = '';
+      if (err.response) {
+        errorMessage = err.response.data.ErrorMessageJP;
+      } else {
+        errorMessage = 'Unknown Error';
+        console.error(err);
+      }
+      setError(errorMessage);
     }
   };
 

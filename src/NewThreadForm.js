@@ -29,7 +29,7 @@ export const NewThreadForm = () => {
       });
       if (response.status === 200) {
         setTitle('');
-        navigate(`/`);
+        navigate('/');
       }
     } catch (err) {
       let errorMessage = '';

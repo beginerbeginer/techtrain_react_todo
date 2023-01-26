@@ -43,7 +43,7 @@
   background: #ffffff;
 }
 
-.form > input{
+.form > input {
   width: 80%;
   height: 50px;
   padding: 10px;
@@ -52,7 +52,7 @@
   border-radius: 10px;
 }
 
-.form> div {
+.form > div {
   margin: 50px;
 }
 

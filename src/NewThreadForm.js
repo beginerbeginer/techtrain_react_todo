@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
@@ -8,7 +8,7 @@ export const NewThreadForm = () => {
   const [title, setTitle] = useState('');
   const [error, setError] = useState(null);
 
-  const onChangeTitle = (e) => {
+  const onChangeTitle = useCallback((e) => {
     const titleName = e.target.value;
     if (titleName.length > 30) {
       setError('タイトルの文字数は30文字以下にしてください');
@@ -16,33 +16,36 @@ export const NewThreadForm = () => {
       setError(null);
     }
     setTitle(titleName);
-  };
+  }, []);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (!title.trim()) {
-      setError('スレッドタイトルを入力してください');
-      return;
-    }
-    try {
-      const response = await axios.post(`${baseUrl}/threads`, {
-        title: title.trim(),
-      });
-      if (response.status === 200) {
-        setTitle('');
-        navigate('/');
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      if (!title.trim()) {
+        setError('スレッドタイトルを入力してください');
+        return;
       }
-    } catch (err) {
-      let errorMessage = '';
-      if (err.response) {
-        errorMessage = err.response.data.ErrorMessageJP;
-      } else {
-        errorMessage = 'Unknown Error';
-        console.error(err);
+      try {
+        const response = await axios.post(`${baseUrl}/threads`, {
+          title: title.trim(),
+        });
+        if (response.status === 200) {
+          setTitle('');
+          navigate('/');
+        }
+      } catch (err) {
+        let errorMessage = '';
+        if (err.response) {
+          errorMessage = err.response.data.ErrorMessageJP;
+        } else {
+          errorMessage = 'Unknown Error';
+          console.error(err);
+        }
+        setError(errorMessage);
       }
-      setError(errorMessage);
-    }
-  };
+    },
+    [title, navigate],
+  );
 
   return (
     <main className="main">

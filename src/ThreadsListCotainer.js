@@ -15,9 +15,7 @@ export const ThreadsListContainer = () => {
   return (
     <main className="main">
       <h1>新着スレッド</h1>
-      <ul className="thread_list">
-        <Threads threads={threads} />
-      </ul>
+      <Threads threads={threads} />
     </main>
   );
 };

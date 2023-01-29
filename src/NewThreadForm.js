@@ -8,16 +8,18 @@ export const NewThreadForm = () => {
   const [title, setTitle] = useState('');
   const [error, setError] = useState(null);
 
+  // 文字を入力する時に実行されるバリデーション
   const onChangeTitle = useCallback((e) => {
     const titleName = e.target.value;
     if (titleName.length > 30) {
-      setError('タイトルの文字数は30文字以下にしてください');
+      setError('タイトルの文字数は30文字以下にしてください'); // 30文字のバリデーションは暫定対応。仕様確定後に修正。
     } else {
       setError(null);
     }
     setTitle(titleName);
   }, []);
 
+  // 送信時に実行されるバリデーション＆例外処理
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();

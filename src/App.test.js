@@ -2,9 +2,11 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { App } from './App';
+import { NewThreadForm } from './NewThreadForm';
 
-describe('App', () => {
+describe('Threads index', () => {
   test('verify「New threads」 exist', () => {
     render(<App />);
     const title = screen.getByText('新着スレッド');
@@ -29,5 +31,17 @@ describe('App', () => {
       const threadTitle = document.getElementsByClassName('thread_title');
       expect(threadTitle.length).toBe(10);
     });
+  });
+});
+
+describe('Thread new', () => {
+  test('verify 「create new thread」 exist', () => {
+    render(
+      <BrowserRouter>
+        <NewThreadForm />
+      </BrowserRouter>,
+    );
+    const title = screen.getByText('スレッド新規作成');
+    expect(title).toBeInTheDocument();
   });
 });

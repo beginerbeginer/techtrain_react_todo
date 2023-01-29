@@ -5,7 +5,7 @@ export const Header = () => {
     <header className="header">
       <div className="title">掲示板</div>
       <div className="menu-item">
-        <a href="#">スレッドをたてる</a>
+        <a href="/thread/new">スレッドをたてる</a>
       </div>
     </header>
   );

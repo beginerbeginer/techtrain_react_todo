@@ -32,7 +32,6 @@ export const NewThreadForm = () => {
           title: title.trim(),
         });
         if (response.status === 200) {
-          setTitle('');
           navigate('/');
         }
       } catch (err) {

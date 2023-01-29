@@ -6,8 +6,9 @@ const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
 export const ThreadsListContainer = () => {
   const [threads, setThreads] = React.useState([]);
 
+  // 最新のスレッドを取得
   React.useEffect(() => {
-    axios.get(`${baseUrl}/threads?offset=1`).then((res) => {
+    axios.get(`${baseUrl}/threads?offset=0`).then((res) => {
       setThreads(res.data);
     });
   }, []);

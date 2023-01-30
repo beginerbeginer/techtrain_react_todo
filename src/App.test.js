@@ -46,7 +46,7 @@ describe('Thread new', () => {
   });
 });
 
-describe('<NewThreadForm />', () => {
+describe('Thread new', () => {
   let input;
   let button;
   let getByText;
@@ -65,12 +65,12 @@ describe('<NewThreadForm />', () => {
 
   beforeEach(setup);
 
-  test('renders the form', () => {
+  test('verify renders the form', () => {
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
 
-  test('validates the title length', async () => {
+  test('verify validates the title length', async () => {
     const inputs = [
       'a'.repeat(31),
       ' '.repeat(31),
@@ -90,7 +90,7 @@ describe('<NewThreadForm />', () => {
     });
   });
 
-  test('requires title input', async () => {
+  test('verify requires title input', async () => {
     fireEvent.click(button);
     await waitFor(() => {
       expect(button).toBeDisabled();

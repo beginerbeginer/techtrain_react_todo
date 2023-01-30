@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
+const baseUrl = process.env.REACT_APP_BASEURL;
 
 export const NewThreadForm = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Threads } from './Threads';
-const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
+const baseUrl = process.env.REACT_APP_BASEURL;
 
 export const ThreadsListContainer = () => {
   const [threads, setThreads] = React.useState([]);

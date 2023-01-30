@@ -47,52 +47,46 @@ describe('Thread new', () => {
 });
 
 describe('<NewThreadForm />', () => {
-  test('renders the form', () => {
-    const { getByPlaceholderText, getByText } = render(
+  const setup = () => {
+    const utils = render(
       <BrowserRouter>
         <NewThreadForm />
       </BrowserRouter>,
     );
-    const input = getByPlaceholderText('スレッドタイトル');
-    const button = getByText('作成');
+    const input = utils.getByPlaceholderText('スレッドタイトル');
+    const button = utils.getByText('作成');
+    return { input, button, ...utils };
+  };
+
+  test('renders the form', () => {
+    const { input, button } = setup();
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
 
   test('validates the title length', async () => {
-    const { getByPlaceholderText, getByText } = render(
-      <BrowserRouter>
-        <NewThreadForm />
-      </BrowserRouter>,
-    );
-    const input = getByPlaceholderText('スレッドタイトル');
-    const button = getByText('作成');
+    const { input, button, getByText } = setup();
+    const inputs = [
+      'a'.repeat(31),
+      ' '.repeat(31),
+      '　'.repeat(31),
+      '　 '.repeat(16),
+    ];
 
-    fireEvent.change(input, { target: { value: 'a'.repeat(31) } });
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-      expect(
-        getByText('タイトルの文字数は30文字以下にしてください'),
-      ).toBeInTheDocument();
-    });
-
-    fireEvent.change(input, { target: { value: ' '.repeat(31) } });
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-      expect(
-        getByText('タイトルの文字数は30文字以下にしてください'),
-      ).toBeInTheDocument();
-    });
+    for (const value of inputs) {
+      fireEvent.change(input, { target: { value } });
+      fireEvent.click(button);
+      await waitFor(() => {
+        expect(button).toBeDisabled();
+        expect(
+          getByText('タイトルの文字数は30文字以下にしてください'),
+        ).toBeInTheDocument();
+      });
+    }
   });
 
   test('requires title input', async () => {
-    const { getByPlaceholderText, getByText } = render(
-      <BrowserRouter>
-        <NewThreadForm />
-      </BrowserRouter>,
-    );
-    const input = getByPlaceholderText('スレッドタイトル');
-    const button = getByText('作成');
+    const { input, button, getByText } = setup();
 
     fireEvent.click(button);
     await waitFor(() => {
@@ -102,31 +96,17 @@ describe('<NewThreadForm />', () => {
       ).toBeInTheDocument();
     });
 
-    fireEvent.change(input, { target: { value: ' '.repeat(30) } });
-    fireEvent.click(button);
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-      expect(
-        getByText('スレッドタイトルを入力してください'),
-      ).toBeInTheDocument();
-    });
+    const inputs = [' ', '　', '　 '];
 
-    fireEvent.change(input, { target: { value: '　'.repeat(30) } });
-    fireEvent.click(button);
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-      expect(
-        getByText('スレッドタイトルを入力してください'),
-      ).toBeInTheDocument();
-    });
-
-    fireEvent.change(input, { target: { value: '　 ' } });
-    fireEvent.click(button);
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-      expect(
-        getByText('スレッドタイトルを入力してください'),
-      ).toBeInTheDocument();
-    });
+    for (const value of inputs) {
+      fireEvent.change(input, { target: { value } });
+      fireEvent.click(button);
+      await waitFor(() => {
+        expect(button).toBeDisabled();
+        expect(
+          getByText('スレッドタイトルを入力してください'),
+        ).toBeInTheDocument();
+      });
+    }
   });
 });

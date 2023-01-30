@@ -2,7 +2,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { NewThreadForm } from './NewThreadForm';
 

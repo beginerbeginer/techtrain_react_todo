@@ -35,18 +35,6 @@ describe('Threads index', () => {
 });
 
 describe('Thread new', () => {
-  test('verify 「create new thread」 exist', () => {
-    render(
-      <BrowserRouter>
-        <NewThreadForm />
-      </BrowserRouter>,
-    );
-    const title = screen.getByText('スレッド新規作成');
-    expect(title).toBeInTheDocument();
-  });
-});
-
-describe('Thread new', () => {
   let input;
   let button;
   let getByText;
@@ -64,6 +52,11 @@ describe('Thread new', () => {
   };
 
   beforeEach(setup);
+
+  test('verify 「create new thread」 exist', () => {
+    const title = screen.getByText('スレッド新規作成');
+    expect(title).toBeInTheDocument();
+  });
 
   test('verify renders the form', () => {
     expect(input).toBeInTheDocument();

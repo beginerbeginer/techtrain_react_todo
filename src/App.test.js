@@ -47,25 +47,30 @@ describe('Thread new', () => {
 });
 
 describe('<NewThreadForm />', () => {
+  let input;
+  let button;
+  let getByText;
+
   const setup = () => {
     const utils = render(
       <BrowserRouter>
         <NewThreadForm />
       </BrowserRouter>,
     );
-    const input = utils.getByPlaceholderText('スレッドタイトル');
-    const button = utils.getByText('作成');
-    return { input, button, ...utils };
+    input = utils.getByPlaceholderText('スレッドタイトル');
+    button = utils.getByText('作成');
+    getByText = utils.getByText;
+    return { input, button, getByText };
   };
 
+  beforeEach(setup);
+
   test('renders the form', () => {
-    const { input, button } = setup();
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
   });
 
   test('validates the title length', async () => {
-    const { input, button, getByText } = setup();
     const inputs = [
       'a'.repeat(31),
       ' '.repeat(31),
@@ -86,8 +91,6 @@ describe('<NewThreadForm />', () => {
   });
 
   test('requires title input', async () => {
-    const { input, button, getByText } = setup();
-
     fireEvent.click(button);
     await waitFor(() => {
       expect(button).toBeDisabled();

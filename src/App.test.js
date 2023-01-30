@@ -73,16 +73,16 @@ describe('<NewThreadForm />', () => {
       '　 '.repeat(16),
     ];
 
-    for (const value of inputs) {
+    inputs.forEach((value) => {
       fireEvent.change(input, { target: { value } });
       fireEvent.click(button);
-      await waitFor(() => {
+      waitFor(() => {
         expect(button).toBeDisabled();
         expect(
           getByText('タイトルの文字数は30文字以下にしてください'),
         ).toBeInTheDocument();
       });
-    }
+    });
   });
 
   test('requires title input', async () => {
@@ -98,15 +98,15 @@ describe('<NewThreadForm />', () => {
 
     const inputs = [' ', '　', '　 '];
 
-    for (const value of inputs) {
+    inputs.forEach((value) => {
       fireEvent.change(input, { target: { value } });
       fireEvent.click(button);
-      await waitFor(() => {
+      waitFor(() => {
         expect(button).toBeDisabled();
         expect(
           getByText('スレッドタイトルを入力してください'),
         ).toBeInTheDocument();
       });
-    }
+    });
   });
 });

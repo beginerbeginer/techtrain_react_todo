@@ -10,13 +10,13 @@ export const NewThreadForm = () => {
   const { register, handleSubmit } = useForm();
 
   // 文字を入力する時に実行されるバリデーション
-  const validate = (value) => {
+  const validate = useCallback((value) => {
     if (value.length > 30) {
       setError('タイトルの文字数は30文字以下にしてください'); // 30文字のバリデーションは暫定対応。仕様確定後に修正。
     } else {
       setError(null);
     }
-  };
+  }, []);
 
   // 送信時に実行されるバリデーション＆例外処理
   const onSubmit = useCallback(

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Threads } from './Threads';
-const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
+const baseUrl = process.env.REACT_APP_BASEURL;
 
 export const ThreadsListContainer = () => {
   const [threads, setThreads] = React.useState([]);
 
+  // 最新のスレッドを取得
   React.useEffect(() => {
-    axios.get(`${baseUrl}/threads?offset=1`).then((res) => {
+    axios.get(`${baseUrl}/threads?offset=0`).then((res) => {
       setThreads(res.data);
     });
   }, []);
@@ -15,9 +16,7 @@ export const ThreadsListContainer = () => {
   return (
     <main className="main">
       <h1>新着スレッド</h1>
-      <ul className="thread_list">
-        <Threads threads={threads} />
-      </ul>
+      <Threads threads={threads} />
     </main>
   );
 };

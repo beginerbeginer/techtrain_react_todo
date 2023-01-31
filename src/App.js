@@ -3,6 +3,7 @@ import { Header } from './Header';
 import { ThreadsListContainer } from './ThreadsListCotainer';
 import { NewThreadForm } from './NewThreadForm';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { THREAD } from './Routes';
 import './App.css';
 
 export const App = () => {
@@ -10,8 +11,8 @@ export const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<ThreadsListContainer />} />
-        <Route path="/thread/new" element={<NewThreadForm />} />
+        <Route path={THREAD.INDEX_PATH} element={<ThreadsListContainer />} />
+        <Route path={THREAD.NEW_PATH} element={<NewThreadForm />} />
       </Routes>
     </BrowserRouter>
   );

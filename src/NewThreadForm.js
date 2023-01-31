@@ -1,67 +1,86 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const baseUrl = 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com';
+import { useForm } from 'react-hook-form';
+const baseUrl = process.env.REACT_APP_BASEURL;
 
 export const NewThreadForm = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('');
-  const [error, setError] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
 
+  // タイトル入力時に実行されるバリデーション
   const onChangeTitle = useCallback((e) => {
     const titleName = e.target.value;
+    // 30文字のバリデーションは暫定対応。仕様確定後に修正。
     if (titleName.length > 30) {
-      setError('タイトルの文字数は30文字以下にしてください');
+      setError('title', {
+        type: 'maxLength',
+      });
     } else {
-      setError(null);
+      setError('title', {
+        type: '',
+      });
     }
-    setTitle(titleName);
   }, []);
 
+  // 送信時に実行されるバリデーション＆例外処理
   const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      if (!title.trim()) {
-        setError('スレッドタイトルを入力してください');
-        return;
+    async (data) => {
+      if (!data.title.trim()) {
+        setError('title', {
+          type: 'required',
+        });
       }
       try {
         const response = await axios.post(`${baseUrl}/threads`, {
-          title: title.trim(),
+          title: data.title.trim(),
         });
         if (response.status === 200) {
-          setTitle('');
           navigate('/');
         }
       } catch (err) {
         let errorMessage = '';
         if (err.response) {
           errorMessage = err.response.data.ErrorMessageJP;
+          console.error(errorMessage);
         } else {
           errorMessage = 'Unknown Error';
-          console.error(err);
+          console.error(errorMessage);
         }
-        setError(errorMessage);
       }
     },
-    [title, navigate],
+    [navigate],
   );
 
   return (
     <main className="main">
       <h1>スレッド新規作成</h1>
-      <form onSubmit={onSubmit} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
         <input
-          value={title}
-          onChange={onChangeTitle}
+          name="title"
+          {...register('title', {
+            required: true,
+            maxLength: 30,
+          })}
           placeholder="スレッドタイトル"
+          onChange={onChangeTitle}
         />
-        {error && <p className="error">{error}</p>}
+        {errors?.title?.type === 'required' && (
+          <p>スレッドタイトルを入力してください</p>
+        )}
+        {errors?.title?.type === 'maxLength' && (
+          <p>タイトルの文字数は30文字以下にしてください</p>
+        )}
         <div>
           <a href="" onClick={() => navigate('/')}>
             Topに戻る
           </a>
-          <button type="submit" className="button" disabled={error}>
+          <button type="submit" className="button">
             作成
           </button>
         </div>

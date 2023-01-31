@@ -71,7 +71,7 @@ button:disabled {
   color: black;
 }
 
-.error {
+p {
   color: red;
   font-size: small;
 }

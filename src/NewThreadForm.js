@@ -52,7 +52,7 @@ export const NewThreadForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <input
           name="title"
-          ref={register()}
+          {...register('title')}
           onChange={(e) => {
             validate(e.target.value);
           }}

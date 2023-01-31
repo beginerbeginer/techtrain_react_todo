@@ -80,7 +80,11 @@ export const NewThreadForm = () => {
           <a href="" onClick={() => navigate('/')}>
             Topに戻る
           </a>
-          <button type="submit" className="button">
+          <button
+            type="submit"
+            className="button"
+            disabled={Boolean(errors?.title?.type)}
+          >
             作成
           </button>
         </div>

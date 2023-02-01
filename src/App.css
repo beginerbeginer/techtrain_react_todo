@@ -36,11 +36,23 @@
 
 .thread_title {
   list-style: none;
-  padding: 10px;
   font-size: 20px;
   border: 1px solid #565656;
   border-radius: 5px;
   background: #ffffff;
+}
+
+.thread_link {
+  display: block;
+  padding: 10px;
+  color: black;
+  text-decoration: none; /* 意味：リンクの下線を消す */
+  transition: all 0.15s ease-in-out; /* 意味：ホバー時のアニメーション */
+}
+
+.thread_link:hover {
+  background-color: gray;
+  color: white;
 }
 
 .form > input {

@@ -21,9 +21,9 @@ export const PostsListContainer = () => {
 
   return (
     <main className="main">
-      <ul className="thread_list">
+      <ul className="post_list">
         {posts.map((post) => (
-          <li className="thread_title" key={post.id}>
+          <li className="post_title" key={post.id}>
             {post.post}
           </li>
         ))}

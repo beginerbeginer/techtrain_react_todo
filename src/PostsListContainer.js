@@ -12,7 +12,7 @@ export const PostsListContainer = () => {
     axios
       .get(`${baseUrl}/threads/${threadId}/posts?offset=0`)
       .then((res) => {
-        setPosts(res.data.posts);
+        setPosts(res.data.posts || []);
       })
       .catch((error) => {
         console.log(error);
@@ -21,13 +21,17 @@ export const PostsListContainer = () => {
 
   return (
     <main className="main">
-      <ul className="post_list">
-        {posts.map((post) => (
-          <li className="post_title" key={post.id}>
-            {post.post}
-          </li>
-        ))}
-      </ul>
+      {posts.length ? (
+        <ul className="post_list">
+          {posts.map((post) => (
+            <li className="post_title" key={post.id}>
+              {post.post}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="center">このスレッドにはまだコメントがありません</div>
+      )}
     </main>
   );
 };

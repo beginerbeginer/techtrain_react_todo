@@ -1,0 +1,30 @@
+name: Prettier
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run prettier
+        run: yarn fmt --write .
+
+      - name: Check for changes
+        run: git diff --quiet
+        id: check_changes
+
+      - name: Auto Commit
+        if: success() and steps.check_changes.outputs.exit-code == 0
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply Code Formatter Change

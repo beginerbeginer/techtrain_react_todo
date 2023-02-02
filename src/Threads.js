@@ -1,18 +1,19 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-const baseUrl = process.env.REACT_APP_BASEURL;
+import { Link } from 'react-router-dom';
 
 export const Threads = ({ threads }) => {
   return (
     <ul className="thread_list">
       {threads.map((thread) => (
         <li className="thread_title" key={thread.id}>
-          <a
-            href={`${baseUrl}/threads/${thread.id}/posts?offset=0`}
+          <Link
+            to={`/threads/${thread.id}/posts`}
+            state={{ threadId: thread.id }}
             className="thread_link"
           >
             {thread.title}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

@@ -20,8 +20,8 @@ jobs:
         run: yarn fmt --write .
 
       - name: Auto Commit
+        if: success()
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply Code Formatter Change
           commit_all: true
-

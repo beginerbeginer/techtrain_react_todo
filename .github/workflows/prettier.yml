@@ -3,7 +3,9 @@ name: Prettier
 on:
   push:
     branches:
-      - '*'
+      - main
+      - feature/*
+      - fix/*
 
 jobs:
   prettier:

@@ -40,15 +40,10 @@ export const PostsListContainer = () => {
   return (
     <main className="main">
       <h3>タイトル：{threadTitle}</h3>
-      {error ? (
-        <Error />
-      ) : posts === null ? (
-        <Loading />
-      ) : posts.length ? (
-        <PostsList posts={posts} />
-      ) : (
-        <NoPosts />
-      )}
+      {error && <Error />}
+      {posts === null && <Loading />}
+      {posts && !posts.length && <NoPosts />}
+      {posts && posts.length > 0 && <PostsList posts={posts} />}
     </main>
   );
 };

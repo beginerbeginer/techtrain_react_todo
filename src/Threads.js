@@ -9,7 +9,7 @@ export const Threads = ({ threads }) => {
         <li className="thread_title" key={thread.id}>
           <Link
             to={`/threads/${thread.id}/posts`}
-            state={{ threadId: thread.id }}
+            state={{ threadId: thread.id, threadTitle: thread.title }}
             className="thread_link"
           >
             {thread.title}

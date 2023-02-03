@@ -1,7 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 const baseUrl = process.env.REACT_APP_BASEURL;
+const Loading = () => <div className="center">Loading...</div>;
+const Error = () => <div className="center">エラーが発生しました</div>;
+const NoPosts = () => (
+  <div className="center">このスレッドにはまだコメントがありません</div>
+);
+
+const PostsList = ({ posts }) => (
+  <ul className="post_list">
+    {posts.map((post) => (
+      <li className="post_title" key={post.id}>
+        {post.post}
+      </li>
+    ))}
+  </ul>
+);
 
 export const PostsListContainer = () => {
   const [posts, setPosts] = useState(null);
@@ -18,28 +34,30 @@ export const PostsListContainer = () => {
       })
       .catch((error) => {
         setError(error);
-        console.log(error);
       });
   }, []);
 
   return (
     <main className="main">
-      <h>タイトル：{threadTitle}</h>
+      <h3>タイトル：{threadTitle}</h3>
       {error ? (
-        <div className="center">エラーが発生しました</div>
+        <Error />
       ) : posts === null ? (
-        <div className="center">Loading...</div>
-      ) : posts.length ? ( // []の配列に対してlengthを取得すると0が返ってくるので、0の場合はfalseとなる。
-        <ul className="post_list">
-          {posts.map((post) => (
-            <li className="post_title" key={post.id}>
-              {post.post}
-            </li>
-          ))}
-        </ul>
+        <Loading />
+      ) : posts.length ? (
+        <PostsList posts={posts} />
       ) : (
-        <div className="center">このスレッドにはまだコメントがありません</div>
+        <NoPosts />
       )}
     </main>
   );
+};
+
+PostsList.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      post: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };

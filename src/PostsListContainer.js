@@ -39,16 +39,12 @@ const postsListReducer = (state, action) => {
   }
 };
 
-export const PostsListContainer = () => {
+const useFetchPosts = (threadId) => {
   const [state, dispatch] = useReducer(postsListReducer, {
     posts: null,
     loading: true,
     error: null,
   });
-  const location = useLocation();
-  const threadId = location.state.threadId;
-  const threadTitle = location.state.threadTitle;
-
   React.useEffect(() => {
     axios
       .get(`${baseUrl}/threads/${threadId}/posts?offset=0`)
@@ -64,7 +60,15 @@ export const PostsListContainer = () => {
           payload: { error },
         });
       });
-  }, []);
+  }, [threadId]);
+  return state;
+};
+
+export const PostsListContainer = () => {
+  const location = useLocation();
+  const threadId = location.state.threadId;
+  const threadTitle = location.state.threadTitle;
+  const state = useFetchPosts(threadId);
 
   return (
     <main className="main">

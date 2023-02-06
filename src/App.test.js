@@ -1,10 +1,17 @@
 // toBeInTheDocument関数を使用するため
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  cleanup,
+} from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import { NewThreadForm } from './NewThreadForm';
+import { Posts } from './Posts';
 
 describe('Threads index', () => {
   const setup = () => {
@@ -107,5 +114,49 @@ describe('Thread new', () => {
         ).toBeInTheDocument();
       });
     });
+  });
+});
+
+describe('Posts index', () => {
+  let states;
+
+  afterEach(cleanup);
+
+  beforeEach(() => {
+    states = {
+      posts: [
+        { id: '123abcde-0000-123a-456b-abcde12345', post: 'Post 1' },
+        { id: '456abcde-0000-234b-789c-bcdef23456', post: 'Post 2' },
+      ],
+      loading: false,
+      error: null,
+    };
+  });
+
+  test('verfy "Loading..." message if in loading state', () => {
+    states.loading = true;
+    const { getByText } = render(<Posts states={states} />);
+    expect(getByText('Loading...')).toBeInTheDocument();
+  });
+
+  test('verify Error message if has error state', () => {
+    states.error = 'Error';
+    const { getByText } = render(<Posts states={states} />);
+    expect(getByText('エラーが発生しました')).toBeInTheDocument();
+  });
+
+  test('verify NoPosts message if posts is empty', () => {
+    states.posts = [];
+    const { getByText } = render(<Posts states={states} />);
+    expect(
+      getByText('このスレッドにはまだコメントがありません'),
+    ).toBeInTheDocument();
+  });
+
+  test('verify PostsList is exist', () => {
+    const { getByText } = render(<Posts states={states} />);
+    for (const post of states.posts) {
+      expect(getByText(post.post)).toBeInTheDocument();
+    }
   });
 });

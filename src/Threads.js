@@ -1,12 +1,19 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export const Threads = ({ threads }) => {
   return (
     <ul className="thread_list">
       {threads.map((thread) => (
         <li className="thread_title" key={thread.id}>
-          {thread.title}
+          <Link
+            to={`/threads/${thread.id}/posts`}
+            state={{ threadId: thread.id, threadTitle: thread.title }}
+            className="thread_link"
+          >
+            {thread.title}
+          </Link>
         </li>
       ))}
     </ul>

@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { THREAD } from './Routes';
 const baseUrl = process.env.REACT_APP_BASEURL;
 
 export const NewThreadForm = () => {
@@ -41,7 +42,7 @@ export const NewThreadForm = () => {
           title: data.title.trim(),
         });
         if (response.status === 200) {
-          navigate('/');
+          navigate(THREAD.INDEX_PATH);
         }
       } catch (err) {
         let errorMessage = '';
@@ -77,9 +78,7 @@ export const NewThreadForm = () => {
           <p>タイトルの文字数は30文字以下にしてください</p>
         )}
         <div>
-          <a href="" onClick={() => navigate('/')}>
-            Topに戻る
-          </a>
+          <Link to={THREAD.INDEX_PATH}>Topに戻る</Link>
           <button
             type="submit"
             className="button"

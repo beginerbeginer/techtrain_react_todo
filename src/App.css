@@ -36,7 +36,33 @@
 
 .thread_title {
   list-style: none;
+  font-size: 20px;
+  border: 1px solid #565656;
+  border-radius: 5px;
+  background: #ffffff;
+}
+
+.thread_link {
+  display: block;
   padding: 10px;
+  color: black;
+  text-decoration: none; /* 意味：リンクの下線を消す */
+  transition: all 0.15s ease-in-out; /* 意味：ホバー時のアニメーション */
+}
+
+.thread_link:hover {
+  background-color: gray;
+  color: white;
+}
+
+.post_list {
+  padding-left: 0;
+}
+
+.post_title {
+  list-style: none;
+  margin: 10px;
+  padding: 5%;
   font-size: 20px;
   border: 1px solid #565656;
   border-radius: 5px;

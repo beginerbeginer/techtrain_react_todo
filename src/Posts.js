@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export const Posts = ({ states }) => {
+  return (
+    <>
+      {states.loading && <Loading />}
+      {states.error && <Error />}
+      {states.posts && !states.posts.length && <NoPosts />}
+      {states.posts && <PostsList posts={states.posts} />}
+    </>
+  );
+};
+
 const Loading = () => <div className="center">Loading...</div>;
 const Error = () => <div className="center">エラーが発生しました</div>;
 const NoPosts = () => (
@@ -15,17 +26,6 @@ const PostsList = ({ posts }) => (
     ))}
   </ul>
 );
-
-export const Posts = ({ states }) => {
-  return (
-    <>
-      {states.loading && <Loading />}
-      {states.error && <Error />}
-      {states.posts && !states.posts.length && <NoPosts />}
-      {states.posts && <PostsList posts={states.posts} />}
-    </>
-  );
-};
 
 PostsList.propTypes = {
   posts: PropTypes.arrayOf(

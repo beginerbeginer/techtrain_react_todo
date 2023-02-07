@@ -52,12 +52,11 @@ const useFetchPosts = (threadId) => {
 export const PostsListContainer = () => {
   const location = useLocation();
   const threadId = location.state.threadId;
-  const threadTitle = location.state.threadTitle;
   const state = useFetchPosts(threadId);
 
   return (
     <main className="main">
-      <h3>タイトル：{threadTitle}</h3>
+      <h3>全てのコメント</h3>
       <Posts state={state} />
     </main>
   );

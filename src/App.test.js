@@ -118,12 +118,12 @@ describe('Thread new', () => {
 });
 
 describe('Posts index', () => {
-  let states;
+  let state;
 
   afterEach(cleanup);
 
   beforeEach(() => {
-    states = {
+    state = {
       posts: [
         { id: '123abcde-0000-123a-456b-abcde12345', post: 'Post 1' },
         { id: '456abcde-0000-234b-789c-bcdef23456', post: 'Post 2' },
@@ -134,28 +134,28 @@ describe('Posts index', () => {
   });
 
   test('verfy "Loading..." message if in loading state', () => {
-    states.loading = true;
-    const { getByText } = render(<Posts states={states} />);
+    state.loading = true;
+    const { getByText } = render(<Posts state={state} />);
     expect(getByText('Loading...')).toBeInTheDocument();
   });
 
   test('verify Error message if has error state', () => {
-    states.error = 'Error';
-    const { getByText } = render(<Posts states={states} />);
+    state.error = 'Error';
+    const { getByText } = render(<Posts state={state} />);
     expect(getByText('エラーが発生しました')).toBeInTheDocument();
   });
 
   test('verify NoPosts message if posts is empty', () => {
-    states.posts = [];
-    const { getByText } = render(<Posts states={states} />);
+    state.posts = [];
+    const { getByText } = render(<Posts state={state} />);
     expect(
       getByText('このスレッドにはまだコメントがありません'),
     ).toBeInTheDocument();
   });
 
   test('verify PostsList is exist', () => {
-    const { getByText } = render(<Posts states={states} />);
-    for (const post of states.posts) {
+    const { getByText } = render(<Posts state={state} />);
+    for (const post of state.posts) {
       expect(getByText(post.post)).toBeInTheDocument();
     }
   });

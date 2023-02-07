@@ -53,12 +53,12 @@ export const PostsListContainer = () => {
   const location = useLocation();
   const threadId = location.state.threadId;
   const threadTitle = location.state.threadTitle;
-  const states = useFetchPosts(threadId);
+  const state = useFetchPosts(threadId);
 
   return (
     <main className="main">
       <h3>タイトル：{threadTitle}</h3>
-      <Posts states={states} />
+      <Posts state={state} />
     </main>
   );
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Posts = ({ states }) => {
+export const Posts = ({ state }) => {
   return (
     <>
-      {states.loading && <Loading />}
-      {states.error && <Error />}
-      {states.posts && !states.posts.length && <NoPosts />}
-      {states.posts && <PostsList posts={states.posts} />}
+      {state.loading && <Loading />}
+      {state.error && <Error />}
+      {state.posts && !state.posts.length && <NoPosts />}
+      {state.posts && <PostsList posts={state.posts} />}
     </>
   );
 };
@@ -37,5 +37,5 @@ PostsList.propTypes = {
 };
 
 Posts.propTypes = {
-  states: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired,
 };

@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Posts = ({ state }) => {
+export const Posts = ({ status, data, error }) => {
   return (
     <>
-      {state.loading && <Loading />}
-      {state.error && <Error />}
-      {state.posts && !state.posts.length && <NoPosts />}
-      {state.posts && <PostsList posts={state.posts} />}
+      {status === 'loading' && <Loading />}
+      {status === 'error' && <Error error={error.message} />}
+      {status === 'success' && !data.length && <NoPosts />}
+      {status === 'success' && <PostsList posts={data} />}
     </>
   );
 };
 
 const Loading = () => <div className="center">Loading...</div>;
-const Error = () => <div className="center">エラーが発生しました</div>;
+const Error = ({ error }) => (
+  <div className="center">エラーが発生しました。エラー内容：{error}</div>
+);
 const NoPosts = () => (
   <div className="center">このスレッドにはまだコメントがありません</div>
 );
@@ -37,5 +39,13 @@ PostsList.propTypes = {
 };
 
 Posts.propTypes = {
-  state: PropTypes.object.isRequired,
+  status: PropTypes.oneOf(['loading', 'error', 'success']).isRequired,
+  data: PropTypes.array,
+  error: PropTypes.shape({
+    message: PropTypes.string,
+  }),
+};
+
+Error.propTypes = {
+  error: PropTypes.string.isRequired,
 };

@@ -7,11 +7,7 @@ export const Threads = ({ threads }) => {
     <ul className="thread_list">
       {threads.map((thread) => (
         <li className="thread_title" key={thread.id}>
-          <Link
-            to={`/threads/${thread.id}/posts`}
-            state={{ threadId: thread.id }}
-            className="thread_link"
-          >
+          <Link to={`/threads/${thread.id}/posts`} className="thread_link">
             {thread.title}
           </Link>
         </li>

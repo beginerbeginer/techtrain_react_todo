@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Posts } from './Posts';
 const baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -50,14 +50,12 @@ const useFetchPosts = (threadId) => {
 };
 
 export const PostsListContainer = () => {
-  const location = useLocation();
-  const threadId = location.state.threadId;
-  const threadTitle = location.state.threadTitle;
+  const { threadId } = useParams();
   const state = useFetchPosts(threadId);
 
   return (
     <main className="main">
-      <h3>タイトル：{threadTitle}</h3>
+      <h3>全てのコメント</h3>
       <Posts state={state} />
     </main>
   );

@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Posts } from './Posts';
+import { CommentForm } from './CommentForm';
 const baseUrl = process.env.REACT_APP_BASEURL;
 
 const postsListReducer = (state, action) => {
@@ -54,9 +55,12 @@ export const PostsListContainer = () => {
   const state = useFetchPosts(threadId);
 
   return (
-    <main className="main">
-      <h3>全てのコメント</h3>
-      <Posts state={state} />
-    </main>
+    <div className="post-form">
+      <main className="main">
+        <h3>全てのコメント</h3>
+        <Posts state={state} />
+      </main>
+      <CommentForm threadId={threadId} />
+    </div>
   );
 };

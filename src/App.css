@@ -101,3 +101,8 @@ p {
   color: red;
   font-size: small;
 }
+
+.post-form {
+  display: flex;
+  flex-direction: row;
+}

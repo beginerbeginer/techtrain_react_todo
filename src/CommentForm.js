@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 const baseUrl = process.env.REACT_APP_BASEURL;
 
-export const CommentForm = ({ threadId }) => {
+export const CommentForm = ({ threadId, fetchPostsList }) => {
   const {
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ export const CommentForm = ({ threadId }) => {
         },
       );
       if (response.status === 200) {
-        window.location.reload();
+        fetchPostsList();
       }
     } catch (err) {
       let errorMessage = '';
@@ -91,4 +91,5 @@ export const CommentForm = ({ threadId }) => {
 
 CommentForm.propTypes = {
   threadId: PropTypes.string.isRequired,
+  fetchPostsList: PropTypes.func.isRequired,
 };

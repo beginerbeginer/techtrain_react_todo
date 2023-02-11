@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Posts } from './Posts';
@@ -31,7 +31,7 @@ const useFetchPosts = (threadId) => {
     loading: true,
     error: null,
   });
-  React.useEffect(() => {
+  const fetchPosts = useCallback(() => {
     axios
       .get(`${baseUrl}/threads/${threadId}/posts?offset=0`)
       .then((res) => {
@@ -47,12 +47,20 @@ const useFetchPosts = (threadId) => {
         });
       });
   }, [threadId]);
-  return state;
+
+  React.useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
+  return { state, fetchPosts };
 };
 
 export const PostsListContainer = () => {
   const { threadId } = useParams();
-  const state = useFetchPosts(threadId);
+  const { state, fetchPosts } = useFetchPosts(threadId);
+  const fetchPostsList = useCallback(() => {
+    fetchPosts();
+  }, [fetchPosts]);
 
   return (
     <div className="post-form">
@@ -60,7 +68,7 @@ export const PostsListContainer = () => {
         <h3>全てのコメント</h3>
         <Posts state={state} />
       </main>
-      <CommentForm threadId={threadId} />
+      <CommentForm threadId={threadId} fetchPostsList={fetchPostsList} />
     </div>
   );
 };

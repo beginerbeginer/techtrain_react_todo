@@ -97,6 +97,11 @@ button:disabled {
   color: black;
 }
 
+input:disabled {
+  background-color: gray;
+  color: black;
+}
+
 p {
   color: red;
   font-size: small;

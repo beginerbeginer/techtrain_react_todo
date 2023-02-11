@@ -37,7 +37,7 @@ export const CommentForm = ({ threadId }) => {
       const response = await axios.post(
         `${baseUrl}/threads/${threadId}/posts`,
         {
-          posts: data.posts.trim(),
+          post: data.posts.trim(),
         },
         {
           headers: {

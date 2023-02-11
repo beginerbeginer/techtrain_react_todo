@@ -8,6 +8,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
   const {
     register,
     handleSubmit,
+    reset,
     setError,
     formState: { errors },
   } = useForm();
@@ -47,6 +48,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         },
       );
       if (response.status === 200) {
+        reset({ posts: '' });
         fetchPostsList();
       }
     } catch (err) {
@@ -68,22 +70,24 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         {...register('posts', {
           required: true,
           maxLength: 140,
+          // 空白文字だけでは投稿できない。文字と文字の間の空白は許可。改行も許可
+          pattern: /^[\S][\s\S]*[\S]$/,
         })}
         placeholder="投稿しよう!"
         onChange={onChangePost}
       />
-      <div>
-        <button
-          type="submit"
-          className="button"
-          disabled={Boolean(errors?.posts?.type)}
-        >
-          投稿
-        </button>
-      </div>
+      <input
+        type="submit"
+        disabled={Boolean(errors?.posts?.type)}
+        value="投稿"
+        className="button"
+      />
       {errors?.posts?.type === 'required' && <p>投稿を入力してください</p>}
       {errors?.posts?.type === 'maxLength' && (
         <p>文字数は140文字以下にしてください</p>
+      )}
+      {errors?.posts?.type === 'pattern' && (
+        <p>先頭と文末の空白文字を削除してください</p>
       )}
     </form>
   );

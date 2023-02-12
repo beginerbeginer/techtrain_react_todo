@@ -60,7 +60,7 @@ export const PostsListContainer = () => {
         <h3>全てのコメント</h3>
         <Posts state={state} />
       </main>
-      <CommentForm threadId={threadId} fetchPostsList={fetchPosts} />
+      <CommentForm threadId={threadId} updatePostsList={fetchPosts} />
     </div>
   );
 };

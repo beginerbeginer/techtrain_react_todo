@@ -97,6 +97,16 @@ button:disabled {
   color: black;
 }
 
+.input {
+  width: 100px;
+  margin-left: 50%;
+  font-size: 20px;
+  color: #ffffff;
+  background-color: #66d48b;
+  border-radius: 10px;
+  border: 1px solid #565656;
+}
+
 input:disabled {
   background-color: gray;
   color: black;

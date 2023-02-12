@@ -84,7 +84,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         type="submit"
         disabled={Boolean(errors?.posts?.type)}
         value="投稿"
-        className="button"
+        className="input"
       />
       {errors?.posts?.type === 'required' && <p>投稿を入力してください</p>}
       {errors?.posts?.type === 'maxLength' && (

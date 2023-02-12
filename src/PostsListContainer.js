@@ -58,6 +58,7 @@ const useFetchPosts = (threadId) => {
 export const PostsListContainer = () => {
   const { threadId } = useParams();
   const { state, fetchPosts } = useFetchPosts(threadId);
+  // コメント投稿後にコメント一覧を更新
   const fetchPostsList = useCallback(() => {
     fetchPosts();
   }, [fetchPosts]);

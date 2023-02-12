@@ -13,21 +13,6 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
     formState: { errors },
   } = useForm();
 
-  // タイトル入力時に実行されるバリデーション
-  const onChangePost = useCallback((e) => {
-    const texts = e.target.value;
-    // 140文字のバリデーションは暫定対応。仕様確定後に修正。
-    if (texts.length > 140) {
-      setError('posts', {
-        type: 'maxLength',
-      });
-    } else {
-      setError('posts', {
-        type: '',
-      });
-    }
-  }, []);
-
   const onSubmit = useCallback(async (data) => {
     if (!data.posts.trim()) {
       setError('posts', {
@@ -78,7 +63,6 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
           maxLength: 140,
         })}
         placeholder="投稿しよう!"
-        onChange={onChangePost}
       />
       <div className="buttonwrap">
         <input type="reset" value="リセット" />

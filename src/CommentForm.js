@@ -18,6 +18,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
       setError('posts', {
         type: 'required',
       });
+      return;
     }
     try {
       const response = await axios.post(

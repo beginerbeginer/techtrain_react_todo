@@ -13,6 +13,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
     formState: { errors },
   } = useForm();
 
+  // 送信時に実行されるバリデーション＆例外処理
   const onSubmit = useCallback(async (data) => {
     if (!data.posts.trim()) {
       setError('posts', {

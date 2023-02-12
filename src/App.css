@@ -27,7 +27,7 @@
   text-align: center;
   margin: auto;
   max-width: 600px;
-  min-width: 300px;
+  min-width: 900px;
 }
 
 .thread_list {
@@ -97,17 +97,41 @@ button:disabled {
   color: black;
 }
 
-.input {
+.commentform>textarea {
+  width: 400px;
+  height: 100px;
+  padding: 10px;
+  font-size: 20px;
+  margin: 10px;
+  border: 1px solid #565656;
+  border-radius: 10px;
+  margin-top: 73px;
+}
+
+.buttonwrap {
+  text-align: center;
+  padding: 20px 0;
+}
+
+input[type="submit"] {
   width: 100px;
-  margin-left: 50%;
   font-size: 20px;
   color: #ffffff;
+  /* margin-left: 50%; */
   background-color: #66d48b;
   border-radius: 10px;
   border: 1px solid #565656;
 }
 
-input:disabled {
+/* input[type="reset"] {
+  width: 100px;
+  font-size: 20px;
+  color: black;
+  border-radius: 10px;
+  border: 1px solid #565656;
+} */
+
+input[type="submit"]:disabled {
   background-color: gray;
   color: black;
 }

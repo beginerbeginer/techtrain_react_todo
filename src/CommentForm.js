@@ -70,7 +70,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="commentform">
       <textarea
         name="posts"
         {...register('posts', {
@@ -80,12 +80,14 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         placeholder="投稿しよう!"
         onChange={onChangePost}
       />
-      <input
-        type="submit"
-        disabled={Boolean(errors?.posts?.type)}
-        value="投稿"
-        className="input"
-      />
+      <div className="buttonwrap">
+        {/* <input type="reset" value="リセット" /> */}
+        <input
+          type="submit"
+          disabled={Boolean(errors?.posts?.type)}
+          value="投稿"
+        />
+      </div>
       {errors?.posts?.type === 'required' && <p>投稿を入力してください</p>}
       {errors?.posts?.type === 'maxLength' && (
         <p>文字数は140文字以下にしてください</p>

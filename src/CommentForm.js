@@ -13,6 +13,16 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
     formState: { errors },
   } = useForm();
 
+  const handleError = (err) => {
+    let errorMessage = '';
+    if (err.response) {
+      errorMessage = err.response.data.ErrorMessageJP;
+    } else {
+      errorMessage = 'Unknown Error';
+    }
+    console.error(errorMessage);
+  };
+
   // 送信時に実行されるバリデーション＆例外処理
   const onSubmit = useCallback(async (data) => {
     if (!data.posts.trim()) {
@@ -39,14 +49,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         fetchPostsList();
       }
     } catch (err) {
-      let errorMessage = '';
-      if (err.response) {
-        errorMessage = err.response.data.ErrorMessageJP;
-        console.error(errorMessage);
-      } else {
-        errorMessage = 'Unknown Error';
-        console.error(errorMessage);
-      }
+      handleError(err);
     }
   }, []);
 

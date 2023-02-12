@@ -81,7 +81,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         onChange={onChangePost}
       />
       <div className="buttonwrap">
-        {/* <input type="reset" value="リセット" /> */}
+        <input type="reset" value="リセット" />
         <input
           type="submit"
           disabled={Boolean(errors?.posts?.type)}

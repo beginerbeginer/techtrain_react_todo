@@ -97,7 +97,7 @@ button:disabled {
   color: black;
 }
 
-.commentform>textarea {
+.commentform > textarea {
   width: 400px;
   height: 100px;
   padding: 10px;
@@ -113,25 +113,25 @@ button:disabled {
   padding: 20px 0;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   width: 100px;
   font-size: 20px;
   color: #ffffff;
-  /* margin-left: 50%; */
+  margin-left: 50%;
   background-color: #66d48b;
   border-radius: 10px;
   border: 1px solid #565656;
 }
 
-/* input[type="reset"] {
+input[type='reset'] {
   width: 100px;
   font-size: 20px;
   color: black;
   border-radius: 10px;
   border: 1px solid #565656;
-} */
+}
 
-input[type="submit"]:disabled {
+input[type='submit']:disabled {
   background-color: gray;
   color: black;
 }

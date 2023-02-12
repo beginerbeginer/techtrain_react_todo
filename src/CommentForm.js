@@ -55,7 +55,7 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
         name="posts"
         {...register('posts', {
           required: true,
-          maxLength: 140,
+          maxLength: 140, // 最大文字数は暫定対応。仕様確定後に修正
         })}
         placeholder="投稿しよう!"
       />

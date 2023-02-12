@@ -33,12 +33,6 @@ export const CommentForm = ({ threadId, fetchPostsList }) => {
           },
         },
       );
-      if (data.posts.trim() === '') {
-        setError('posts', {
-          type: 'required',
-        });
-        return;
-      }
       if (response.status === 200) {
         reset({ posts: '' });
         fetchPostsList();

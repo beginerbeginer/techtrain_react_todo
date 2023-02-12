@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Posts } from './Posts';
@@ -31,26 +31,21 @@ const useFetchPosts = (threadId) => {
     loading: true,
     error: null,
   });
-  const fetchPosts = useCallback(() => {
-    axios
-      .get(`${baseUrl}/threads/${threadId}/posts?offset=0`)
-      .then((res) => {
-        dispatch({
-          type: 'SUCCESS',
-          payload: { posts: res.data.posts || [] },
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: 'ERROR',
-          payload: { error },
-        });
-      });
-  }, [threadId]);
+
+  const fetchPosts = async () => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/threads/${threadId}/posts?offset=0`,
+      );
+      dispatch({ type: 'SUCCESS', payload: { posts: res.data.posts || [] } });
+    } catch (error) {
+      dispatch({ type: 'ERROR', payload: { error } });
+    }
+  };
 
   React.useEffect(() => {
     fetchPosts();
-  }, [fetchPosts]);
+  }, []);
 
   return { state, fetchPosts };
 };
@@ -58,10 +53,6 @@ const useFetchPosts = (threadId) => {
 export const PostsListContainer = () => {
   const { threadId } = useParams();
   const { state, fetchPosts } = useFetchPosts(threadId);
-  // コメント投稿後にコメント一覧を更新
-  const fetchPostsList = useCallback(() => {
-    fetchPosts();
-  }, [fetchPosts]);
 
   return (
     <div className="post-form">
@@ -69,7 +60,7 @@ export const PostsListContainer = () => {
         <h3>全てのコメント</h3>
         <Posts state={state} />
       </main>
-      <CommentForm threadId={threadId} fetchPostsList={fetchPostsList} />
+      <CommentForm threadId={threadId} fetchPostsList={fetchPosts} />
     </div>
   );
 };

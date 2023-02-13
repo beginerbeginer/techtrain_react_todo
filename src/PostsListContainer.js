@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Posts } from './Posts';
+import { CommentForm } from './CommentForm';
 const baseUrl = process.env.REACT_APP_BASEURL;
 
 const postsListReducer = (state, action) => {
@@ -30,33 +31,36 @@ const useFetchPosts = (threadId) => {
     loading: true,
     error: null,
   });
+
+  const fetchPosts = async () => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/threads/${threadId}/posts?offset=0`,
+      );
+      dispatch({ type: 'SUCCESS', payload: { posts: res.data.posts || [] } });
+    } catch (error) {
+      dispatch({ type: 'ERROR', payload: { error } });
+    }
+  };
+
   React.useEffect(() => {
-    axios
-      .get(`${baseUrl}/threads/${threadId}/posts?offset=0`)
-      .then((res) => {
-        dispatch({
-          type: 'SUCCESS',
-          payload: { posts: res.data.posts || [] },
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: 'ERROR',
-          payload: { error },
-        });
-      });
-  }, [threadId]);
-  return state;
+    fetchPosts();
+  }, []);
+
+  return { state, fetchPosts };
 };
 
 export const PostsListContainer = () => {
   const { threadId } = useParams();
-  const state = useFetchPosts(threadId);
+  const { state, fetchPosts } = useFetchPosts(threadId);
 
   return (
-    <main className="main">
-      <h3>全てのコメント</h3>
-      <Posts state={state} />
-    </main>
+    <div className="post-form">
+      <main className="main">
+        <h3>全てのコメント</h3>
+        <Posts state={state} />
+      </main>
+      <CommentForm threadId={threadId} updatePostsList={fetchPosts} />
+    </div>
   );
 };

@@ -1,66 +1,36 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Posts } from './Posts';
-import { CommentForm } from './CommentForm';
 const baseUrl = process.env.REACT_APP_BASEURL;
-
-const postsListReducer = (state, action) => {
-  switch (action.type) {
-    case 'SUCCESS':
-      return {
-        ...state,
-        posts: action.payload.posts,
-        loading: false,
-        error: null,
-      };
-    case 'ERROR':
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error,
-      };
-    default:
-      return state;
-  }
-};
-
-const useFetchPosts = (threadId) => {
-  const [state, dispatch] = useReducer(postsListReducer, {
-    posts: null,
-    loading: true,
-    error: null,
-  });
-
-  const fetchPosts = async () => {
-    try {
-      const res = await axios.get(
-        `${baseUrl}/threads/${threadId}/posts?offset=0`,
-      );
-      dispatch({ type: 'SUCCESS', payload: { posts: res.data.posts || [] } });
-    } catch (error) {
-      dispatch({ type: 'ERROR', payload: { error } });
-    }
-  };
-
-  React.useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  return { state, fetchPosts };
-};
 
 export const PostsListContainer = () => {
   const { threadId } = useParams();
-  const { state, fetchPosts } = useFetchPosts(threadId);
+
+  // useQueryを使ってAPIデータを取得する
+  const {
+    status,
+    data = [],
+    error,
+  } = useQuery(
+    ['posts', threadId],
+    async () => {
+      const res = await axios.get(
+        `${baseUrl}/threads/${threadId}/posts?offset=0`,
+      );
+      return res.data.posts || [];
+    },
+    {
+      // cacheTimeにキャッシュ時間を設定する。5分
+      cacheTime: 5 * 60 * 1000,
+    },
+  );
 
   return (
-    <div className="post-form">
-      <main className="main">
-        <h3>全てのコメント</h3>
-        <Posts state={state} />
-      </main>
-      <CommentForm threadId={threadId} updatePostsList={fetchPosts} />
-    </div>
+    <main className="main">
+      <h3>全てのコメント</h3>
+      <Posts status={status} data={data} error={error} />
+    </main>
   );
 };
